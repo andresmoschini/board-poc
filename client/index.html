@@ -9,30 +9,35 @@
 </head>
 
 <body>
-
+  <ul class="nav-horizontal">
+    <li><a href="#" >Logo</a></li>
+    <li><a href="#" data-bind="click: newNote">Add Note</a></li>
+    <li><a href="#">Clear Board</a></li>
+  </ul>
   <div>
-    <ul>
-      <li><label>Name:<input type="text" data-bind="textInput: name" /></label></li>
-      <li><label>Color:<input type="text" data-bind="textInput: color" /></label></li>
-      <li><button data-bind="click: newNote">New note</button></li>
-    </ul>
     <div class="board" data-bind="drop: true, foreach: notes">
-      <ul class="note" data-bind="drag: true, style: style">
-        <li><label>Title:<input type="text" data-bind="textInput: title" /></label></li>
-        <li><label>Content:<input type="text" data-bind="textInput: content" /></label></li>
-        <li><label>PosX:<input type="text" data-bind="textInput: posX" /></label></li>
-        <li><label>PosY:<input type="text" data-bind="textInput: posY" /></label></li>
+      <ul class="note" data-bind="drag: true, style: style" >
+        <!-- <li><label>Title:<input type="text" data-bind="textInput: title" /></label></li> -->
+        <li>
+            <h2  data-bind="jeditable: title, jeditableOptions: {}">Title</h2>
+            <div class="text-editable" data-bind="jeditable: content, jeditableOptions: {type: 'textarea', submit: 'Ok', cancel: 'Cancel'}" >Inner text</div>
+        </li>
+        <!-- <li><label>PosX:<input type="text" data-bind="textInput: posX" /></label></li>
+        <li><label>PosY:<input type="text" data-bind="textInput: posY" /></label></li> -->
       </ul>
+      </div>
     </div>
-  </div>
-  
+
+
   Plain:
   <pre data-bind="text: ko.toJSON($root.toPlain(), null, 2)"></pre>
-  
+
   ViewModel
   <pre data-bind="text: ko.toJSON($root, null, 2)"></pre>
-  
+
   <script src="bower_components/socket.io-client/socket.io.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/jeditable/jquery.jeditable.js"></script>
   <script src="https://cdn.rawgit.com/chbrown/rfc6902/v1.0.6/rfc6902.js"></script>
   <script src="bower_components/knockout/dist/knockout.js"></script>
   <script src="lib/scripts.js"></script>

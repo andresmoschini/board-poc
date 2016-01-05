@@ -7,6 +7,7 @@ module ViewModel {
 
   export class Note {
     id: string;
+
     title = ko.observable<string>();
     content = ko.observable<string>();
     posX = ko.observable<number>(0);
@@ -22,11 +23,13 @@ module ViewModel {
       };
     });
 
+
     update(plain: Model.Note) {
       this.title(plain.title);
       this.content(plain.content);
       this.posX(plain.posX);
       this.posY(plain.posY);
+
     }
 
     toPlain(): Model.Note {
@@ -70,6 +73,8 @@ module ViewModel {
       id = id || Utils.randomString();
       var note = new Note();
       note.id = id;
+      note.title( "Title here" );
+      note.content("Content here");
       this.notesById[id] = note;
       this.notes.push(note);
       return note;
