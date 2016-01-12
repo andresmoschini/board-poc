@@ -6,5 +6,3 @@ npm-debug.log
 client/lib/**
 client/bower_components/**
 
-src/_tsd.d.ts
-tsconfig.json

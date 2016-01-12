@@ -13,11 +13,12 @@
   ],
   "scripts": {
     "test": "gulp test",
-    "start": "node server/server.js",
-    "postinstall": "bower install && tsd update --save --overwrite && gulp build"
+    "start": "gulp build && node server/server.js",
+    "postinstall": "bower install && tsd install"
   },
   "dependencies": {
     "bower": "1.4.2",
+    "browserify": "^13.0.0",
     "del": "2.0.2",
     "express": "4.10.2",
     "gulp": "^3.9.0",
@@ -30,6 +31,7 @@
     "rfc6902": "^1.0.8",
     "socket.io": "1.2.0",
     "tsd": "0.6.5",
+    "tsify": "^0.13.2",
     "typescript": "1.6.2"
   },
   "devDependencies": {},
