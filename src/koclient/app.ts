@@ -1,3 +1,6 @@
+/// <reference path="../../node_modules/rfc6902/rfc6902.d.ts" />
+
+import rfc6902 = require("rfc6902");
 import Utils = require("../common/utils");
 import Model = require("../common/model");
 import ViewModel = require("./view-model");
