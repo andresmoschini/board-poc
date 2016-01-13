@@ -17,3 +17,14 @@ Try it on http://board-poc.herokuapp.com/ (the board is clean on new connections
     * [TypeStrong tsify](https://github.com/TypeStrong/tsify) `npm install -g tsify`.
 4. Run `npm install`. With that will be installed all node dependencies, front-end dependencies using [bower](http://bower.io/) and will be compiled all typescript files.
 5. Finally should be run `npm start`.
+
+## Add new dependencies
+
+New dependencies could be added using _Bower_, in that case, the reference should be added to HTML files.
+
+Also, _npm_ dependencies could be added and consumed using `import ... = require(...)`.
+
+With both, _npm_ and _bower_, we need TypeScrip definitions. If _DefinitelyTyped_ definitions are available
+it is enough to call `tsd install ... --save` and add the reference to the right files.
+
+If _DefinitelyTyped_ definitions are not available, it is possible to create our own definitions, see the folder `custom-typings`.
