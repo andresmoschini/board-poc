@@ -1,0 +1,3 @@
+It is to generate lib folder.
+
+TO DO: Generate lib folder in _build task and remove this file.
