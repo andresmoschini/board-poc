@@ -1,8 +1,5 @@
-///<reference path='./_tsd.d.ts' />
-///<reference path='./_defaults.d.ts' />
-
-import Utils = require("./utils");
-import Model = require("./model");
+import Utils = require("../common/utils");
+import Model = require("../common/model");
 import ViewModel = require("./view-model");
 
 export interface AppConfiguration {

@@ -11,7 +11,9 @@ var shadow = { };
 var current = JSON.parse(JSON.stringify(shadow));
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/../client/index.html');
+  // TODO: add a new index page to allow to select client implementation
+  // res.sendFile(__dirname + '/../client/index.html');
+  res.redirect('/koclient.html')
 });
 
 io.on("connection", function(socket){
