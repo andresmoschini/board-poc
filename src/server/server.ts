@@ -1,19 +1,26 @@
-var rfc6902 = require("rfc6902");
-var express = require("express"); 
+/// <reference path="../../typings/express/express.d.ts" />
+/// <reference path="../../typings/socket.io/socket.io.d.ts" />
+/// <reference path="../../node_modules/rfc6902/rfc6902.d.ts" />
+
+import rfc6902 = require("rfc6902");
+import express = require("express");
 var app = express();
 app.use(express.static(__dirname + "/../client"));
 
-var http = require("http").Server(app);
-var io = require("socket.io")(http);
+import httpModule = require("http");
+var http = (<any>httpModule).Server(app);
+
+import socketIO = require("socket.io");
+var io = socketIO(http);
 
 var shadow = { };
 
 var current = JSON.parse(JSON.stringify(shadow));
 
-app.get('/', function(req, res){
+app.get("/", function(req, res){
   // TODO: add a new index page to allow to select client implementation
-  // res.sendFile(__dirname + '/../client/index.html');
-  res.redirect('/koclient.html')
+  // res.sendFile(__dirname + "/../client/index.html");
+  res.redirect("/koclient.html");
 });
 
 io.on("connection", function(socket){

@@ -29,5 +29,13 @@ gulp.task('_build_koclient', 'INTERNAL TASK - Compiles Knockout Client TypeScrip
   });
 });
 
+gulp.task('_build_server', 'INTERNAL TASK - Compiles Server TypeScript source files', function (cb) {
+  exec('tsc --project src/server', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});
+
 gulp.task('build', 'Compiles all TypeScript source files and updates module references', 
-  gulpSequence('tslint', '_build_koclient'));
+  gulpSequence('tslint', [ '_build_server', '_build_koclient' ]));
