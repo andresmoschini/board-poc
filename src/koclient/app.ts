@@ -27,7 +27,7 @@ class App {
   socket: SocketIOClient.Socket;
   socketEventName: string;
 
-  applyServerPatch(serverChanges: Patch) {
+  applyServerPatch(serverChanges: Model.Patch) {
     var current = this.boardVM.toPlain();
     var myChanges = rfc6902.createPatch(this.shadowClient, current);
     // I am clonnig patch because the created objects has the same reference

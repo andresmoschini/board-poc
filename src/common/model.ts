@@ -1,3 +1,5 @@
+export type Patch = any;
+
 export interface PatchMessage {
   patch: Patch;
 }

@@ -1,3 +1,4 @@
+/// <reference path="../custom-typings/defaults.d.ts" />
 /// <reference path="../../typings/express/express.d.ts" />
 /// <reference path="../../typings/socket.io/socket.io.d.ts" />
 /// <reference path="../../node_modules/rfc6902/rfc6902.d.ts" />
@@ -14,10 +15,11 @@ import socketIO = require("socket.io");
 var io = socketIO(http);
 
 import Utils = require("../common/utils");
+import Model = require("../common/model");
 
-var shadow = { };
+var shadow : Model.Board = { };
 
-var current = Utils.clone(shadow);
+var current : Model.Board = Utils.clone(shadow);
 
 app.get("/", function(req, res){
   // TODO: add a new index page to allow to select client implementation
@@ -31,9 +33,13 @@ io.on("connection", function(socket){
   // TODO: send current board at first connection in place of clean all
   current = { };
 
-  socket.on("board", function(msg){
-    if (msg.patch) {
-      var output = rfc6902.applyPatch(current, msg.patch);
+  socket.on("board", function(msg: Model.Message) {
+    var board = (<Model.BoardMessage>msg).board;
+    var patch = (<Model.PatchMessage>msg).patch;
+    if (board) {
+      // TODO: do something
+    } else if (patch) {
+      var output = rfc6902.applyPatch(current, patch);
     }
   });
 });
