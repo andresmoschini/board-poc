@@ -5,7 +5,7 @@
 import rfc6902 = require("rfc6902");
 import express = require("express");
 var app = express();
-app.use(express.static(__dirname + "/../client"));
+app.use(express.static(__dirname + "/../../client"));
 
 import httpModule = require("http");
 var http = (<any>httpModule).Server(app);
@@ -13,9 +13,11 @@ var http = (<any>httpModule).Server(app);
 import socketIO = require("socket.io");
 var io = socketIO(http);
 
+import Utils = require("../common/utils");
+
 var shadow = { };
 
-var current = JSON.parse(JSON.stringify(shadow));
+var current = Utils.clone(shadow);
 
 app.get("/", function(req, res){
   // TODO: add a new index page to allow to select client implementation
@@ -39,7 +41,7 @@ io.on("connection", function(socket){
 var interval = 1000;
 setInterval(function() {
   // I am clonnig patch because the created objects has the same reference 
-  var changes = JSON.parse(JSON.stringify(rfc6902.createPatch(shadow, current)));
+  var changes = Utils.clone(rfc6902.createPatch(shadow, current));
   if (changes.length) {
     rfc6902.applyPatch(shadow, changes);
     io.emit("board", { patch: changes });
