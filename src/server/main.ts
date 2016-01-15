@@ -3,19 +3,19 @@
 /// <reference path="../../typings/socket.io/socket.io.d.ts" />
 /// <reference path="../../node_modules/rfc6902/rfc6902.d.ts" />
 
-import rfc6902 = require("rfc6902");
-import express = require("express");
+import * as rfc6902 from "rfc6902";
+import * as express from "express";
 var app = express();
 app.use(express.static(__dirname + "/../../client"));
 
-import httpModule = require("http");
+import * as httpModule from "http";
 var http = (<any>httpModule).Server(app);
 
-import socketIO = require("socket.io");
+import * as socketIO from "socket.io";
 var io = socketIO(http);
 
-import Utils = require("../common/utils");
-import Model = require("../common/model");
+import * as Utils from "../common/utils";
+import * as Model from "../common/model";
 
 var shadow : Model.Board = { };
 

@@ -1,9 +1,9 @@
 /// <reference path="../../node_modules/rfc6902/rfc6902.d.ts" />
 
-import rfc6902 = require("rfc6902");
-import Utils = require("../common/utils");
-import Model = require("../common/model");
-import ViewModel = require("./view-model");
+import * as rfc6902 from "rfc6902";
+import * as Utils from "../common/utils";
+import * as Model from "../common/model";
+import * as ViewModel from "./view-model";
 
 export interface AppConfiguration {
   rootNode?: any;

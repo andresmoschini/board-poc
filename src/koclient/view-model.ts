@@ -1,5 +1,5 @@
-import Utils = require("../common/utils");
-import Model = require("../common/model");
+import * as Utils from "../common/utils";
+import * as Model from "../common/model";
 
 export interface NoteStyle {
   top: string;
