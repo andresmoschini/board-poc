@@ -1,5 +1,5 @@
-import * as Utils from "../common/utils";
-import * as Model from "../common/model";
+import * as utils from "../common/utils";
+import * as model from "../common/model";
 
 export interface NoteStyle {
   top: string;
@@ -26,7 +26,7 @@ export class Note {
   });
 
 
-  update(plain: Model.Note) {
+  update(plain: model.Note) {
     this.title(plain.title);
     this.content(plain.content);
     this.posX(plain.posX);
@@ -34,7 +34,7 @@ export class Note {
 
   }
 
-  toPlain(): Model.Note {
+  toPlain(): model.Note {
     var result = { };
     AddTruthyValue(result, "title", this.title());
     AddTruthyValue(result, "content", this.content());
@@ -72,7 +72,7 @@ export class Board {
   };
 
   createNote(id: string = null) : Note {
-    id = id || Utils.randomString();
+    id = id || utils.randomString();
     var note = new Note();
     note.id = id;
     note.title( "Title here" );
@@ -88,7 +88,7 @@ export class Board {
     this.notes.remove(note);
   }
 
-  update(plain: Model.Board) {
+  update(plain: model.Board) {
     this.name(plain.name);
     this.color(plain.color);
 
@@ -109,13 +109,13 @@ export class Board {
     }
   }
 
-  toPlain(): Model.Board {
-    var result = <Model.Board>{ };
+  toPlain(): model.Board {
+    var result = <model.Board>{ };
     AddTruthyValue(result, "name", this.name());
     AddTruthyValue(result, "color", this.color());
     var noteVMs = this.notes();
     if (noteVMs.length) {
-      var notes = <Dictionary<Model.Note>>{};
+      var notes = <Dictionary<model.Note>>{};
       for (var i in noteVMs) {
         var noteVM = noteVMs[i];
         notes[noteVM.id] = noteVM.toPlain();

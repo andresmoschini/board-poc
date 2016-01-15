@@ -14,12 +14,12 @@ var http = (<any>httpModule).Server(app);
 import * as socketIO from "socket.io";
 var io = socketIO(http);
 
-import * as Utils from "../common/utils";
-import * as Model from "../common/model";
+import * as utils from "../common/utils";
+import * as model from "../common/model";
 
-var shadow : Model.Board = { };
+var shadow : model.Board = { };
 
-var current : Model.Board = Utils.clone(shadow);
+var current : model.Board = utils.clone(shadow);
 
 app.get("/", function(req, res){
   // TODO: add a new index page to allow to select client implementation
@@ -33,9 +33,9 @@ io.on("connection", function(socket){
   // TODO: send current board at first connection in place of clean all
   current = { };
 
-  socket.on("board", function(msg: Model.Message) {
-    var board = (<Model.BoardMessage>msg).board;
-    var patch = (<Model.PatchMessage>msg).patch;
+  socket.on("board", function(msg: model.Message) {
+    var board = (<model.BoardMessage>msg).board;
+    var patch = (<model.PatchMessage>msg).patch;
     if (board) {
       // TODO: do something
     } else if (patch) {
@@ -47,7 +47,7 @@ io.on("connection", function(socket){
 var interval = 1000;
 setInterval(function() {
   // I am clonnig patch because the created objects has the same reference 
-  var changes = Utils.clone(rfc6902.createPatch(shadow, current));
+  var changes = utils.clone(rfc6902.createPatch(shadow, current));
   if (changes.length) {
     rfc6902.applyPatch(shadow, changes);
     io.emit("board", { patch: changes });

@@ -4,11 +4,11 @@
 /// <reference path="../custom-typings/defaults.d.ts" />
 /// <reference path="../custom-typings/jquery-jeditable.d.ts" />
 
-import * as DragNDrop from "./kobindings/dragndrop";
-DragNDrop.register();
+import * as dragNDrop from "./kobindings/dragndrop";
+dragNDrop.register();
 
-import * as JEditable from "./kobindings/jeditable";
-JEditable.register();
+import * as jEditable from "./kobindings/jeditable";
+jEditable.register();
 
-import * as App from "./app";
-App.start();
+import * as app from "./app";
+app.start();

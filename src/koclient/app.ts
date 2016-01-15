@@ -1,9 +1,9 @@
 /// <reference path="../../node_modules/rfc6902/rfc6902.d.ts" />
 
 import * as rfc6902 from "rfc6902";
-import * as Utils from "../common/utils";
-import * as Model from "../common/model";
-import * as ViewModel from "./view-model";
+import * as utils from "../common/utils";
+import * as model from "../common/model";
+import * as viewModel from "./view-model";
 
 export interface AppConfiguration {
   rootNode?: any;
@@ -19,31 +19,31 @@ export var defaultConfiguration: AppConfiguration = {
 
 export function start(config?: AppConfiguration) {
   var app = new App();
-  config = Utils.extend({ }, defaultConfiguration, config);
+  config = utils.extend({ }, defaultConfiguration, config);
   app.start(config);
 }
 
 class App {
-  shadowServer: Model.Board = { };
-  shadowClient: Model.Board = { };
-  boardVM = new ViewModel.Board();
+  shadowServer: model.Board = { };
+  shadowClient: model.Board = { };
+  boardVM = new viewModel.Board();
   socket: SocketIOClient.Socket;
   socketEventName: string;
 
-  applyServerPatch(serverChanges: Model.Patch) {
+  applyServerPatch(serverChanges: model.Patch) {
     var current = this.boardVM.toPlain();
     var myChanges = rfc6902.createPatch(this.shadowClient, current);
     // I am clonnig patch because the created objects has the same reference
-    rfc6902.applyPatch(this.shadowServer, Utils.clone(serverChanges));
+    rfc6902.applyPatch(this.shadowServer, utils.clone(serverChanges));
     rfc6902.applyPatch(current, serverChanges);
     rfc6902.applyPatch(current, myChanges);
     this.boardVM.update(current);
     this.shadowClient = this.boardVM.toPlain();
   }
 
-  onMessage = (msg: Model.Message) => {
-    var board = (<Model.BoardMessage>msg).board;
-    var patch = (<Model.PatchMessage>msg).patch;
+  onMessage = (msg: model.Message) => {
+    var board = (<model.BoardMessage>msg).board;
+    var patch = (<model.PatchMessage>msg).patch;
     if (board) {
       // TODO: refresh all the board
     } else if (patch) {
