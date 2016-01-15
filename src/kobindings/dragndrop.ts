@@ -1,4 +1,4 @@
-module DragNDrop {
+export function register() {
   var _dragged: any;
   var _xFix: number;
   var _yFix: number;
