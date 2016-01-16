@@ -10,5 +10,7 @@ dragNDrop.register();
 import * as jEditable from "./kobindings/jeditable";
 jEditable.register();
 
-import * as app from "./app";
-app.start();
+import { BoardVM } from "./ko-view-model";
+
+import * as app from "../common/client-app";
+app.start(new BoardVM());

@@ -1,5 +1,6 @@
 import * as utils from "../common/utils";
-import * as model from "../common/model";
+import { Note, Board } from "../common/model";
+import { IBoardVM } from "../common/view-model";
 
 export interface NoteStyle {
   top: string;
@@ -7,7 +8,7 @@ export interface NoteStyle {
   display: string;
 }
 
-export class Note {
+export class NoteVM {
   id: string;
 
   title = ko.observable<string>();
@@ -26,7 +27,7 @@ export class Note {
   });
 
 
-  update(plain: model.Note) {
+  update(plain: Note) {
     this.title(plain.title);
     this.content(plain.content);
     this.posX(plain.posX);
@@ -34,7 +35,7 @@ export class Note {
 
   }
 
-  toPlain(): model.Note {
+  toPlain(): Note {
     var result = { };
     AddTruthyValue(result, "title", this.title());
     AddTruthyValue(result, "content", this.content());
@@ -56,13 +57,13 @@ function AddNumberValue(destination: any, key: string, value: number) {
   }
 }
 
-export class Board {
+export class BoardVM implements IBoardVM {
   name = ko.observable<string>();
   color = ko.observable<string>();
-  notes = ko.observableArray<Note>([]);
+  notes = ko.observableArray<NoteVM>([]);
 
   // TODO: consider to remove this index
-  private notesById: Dictionary<Note> = {};
+  private notesById: Dictionary<NoteVM> = {};
 
   newNote = () => {
     var note = this.createNote();
@@ -71,9 +72,9 @@ export class Board {
     return note;
   };
 
-  createNote(id: string = null) : Note {
+  createNote(id: string = null) : NoteVM {
     id = id || utils.randomString();
-    var note = new Note();
+    var note = new NoteVM();
     note.id = id;
     note.title( "Title here" );
     note.content("Content here");
@@ -88,7 +89,7 @@ export class Board {
     this.notes.remove(note);
   }
 
-  update(plain: model.Board) {
+  update(plain: Board) {
     this.name(plain.name);
     this.color(plain.color);
 
@@ -109,13 +110,13 @@ export class Board {
     }
   }
 
-  toPlain(): model.Board {
-    var result = <model.Board>{ };
+  toPlain(): Board {
+    var result = <Board>{ };
     AddTruthyValue(result, "name", this.name());
     AddTruthyValue(result, "color", this.color());
     var noteVMs = this.notes();
     if (noteVMs.length) {
-      var notes = <Dictionary<model.Note>>{};
+      var notes = <Dictionary<Note>>{};
       for (var i in noteVMs) {
         var noteVM = noteVMs[i];
         notes[noteVM.id] = noteVM.toPlain();
