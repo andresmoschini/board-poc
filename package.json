@@ -28,6 +28,7 @@
     "gulp-sequence": "0.4.1",
     "gulp-tsconfig-files": "0.0.2",
     "gulp-tslint": "^3.1",
+    "react": "^0.14.6",
     "rfc6902": "^1.0.8",
     "socket.io": "1.2.0",
     "tsd": "0.6.5",
