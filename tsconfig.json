@@ -2,9 +2,11 @@
   "compilerOptions": {
     "module": "commonjs",
     "preserveConstEnums": true,
-    "removeComments": true
+    "removeComments": true,
+    "jsx": "react"
   },
   "filesGlob": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ]
 }
