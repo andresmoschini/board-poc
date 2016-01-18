@@ -1,3 +1,5 @@
+/// <reference path="../../custom-typings/jquery-jeditable.d.ts" />
+var a : Dictionary<string>;
 export function register() {
   ko.bindingHandlers["jeditable"] = {
     init: function(element, valueAccessor, allBindingsAccessor) {

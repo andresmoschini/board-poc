@@ -21,8 +21,16 @@ gulp.task('tslint', 'Lints all TypeScript source files', function () {
     .pipe(tslint.report('verbose'));
 });
 
-gulp.task('_build', 'INTERNAL TASK - Compiles all TypeScript source files', function (cb) {
-  exec('browserify src/main.ts --debug -p [ tsify --noImplicitAny ] -o client/lib/scripts.js', function (err, stdout, stderr) {
+gulp.task('_build_koclient', 'INTERNAL TASK - Compiles Knockout Client TypeScript source files', function (cb) {
+  exec('browserify src/koclient/ko-main.ts --debug -p [ tsify --noImplicitAny ] -o client/lib/koclient.js', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});
+
+gulp.task('_build_server', 'INTERNAL TASK - Compiles Server TypeScript source files', function (cb) {
+  exec('tsc --project src/server', function (err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
     cb(err);
@@ -30,4 +38,4 @@ gulp.task('_build', 'INTERNAL TASK - Compiles all TypeScript source files', func
 });
 
 gulp.task('build', 'Compiles all TypeScript source files and updates module references', 
-  gulpSequence('tslint', '_build'));
+  gulpSequence('tslint', [ '_build_server', '_build_koclient' ]));

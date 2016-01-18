@@ -6,3 +6,4 @@ npm-debug.log
 client/lib/**
 client/bower_components/**
 
+server/**
