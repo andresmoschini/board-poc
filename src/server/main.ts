@@ -30,8 +30,8 @@ app.get("/", function(req, res){
 io.on("connection", function(socket){
   console.log("connection");
 
-  // TODO: send current board at first connection in place of clean all
-  current = { };
+  // Send to client the board
+  socket.emit( "board", { board: shadow } );
 
   socket.on("board", function(msg: model.Message) {
     var board = (<model.BoardMessage>msg).board;
@@ -46,7 +46,7 @@ io.on("connection", function(socket){
 
 var interval = 1000;
 setInterval(function() {
-  // I am clonnig patch because the created objects has the same reference 
+  // I am clonnig patch because the created objects has the same reference
   var changes = utils.clone(rfc6902.createPatch(shadow, current));
   if (changes.length) {
     rfc6902.applyPatch(shadow, changes);

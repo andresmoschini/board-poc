@@ -110,6 +110,10 @@ export class BoardVM implements IBoardVM {
     }
   }
 
+  clearBoard() {
+    this.notes.removeAll();
+  }
+
   toPlain(): Board {
     var result = <Board>{ };
     AddTruthyValue(result, "name", this.name());
