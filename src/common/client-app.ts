@@ -48,11 +48,16 @@ class App {
     this.shadowClient = this.boardVM.toPlain();
   }
 
+  initializateShadowServer = (board: model.Board) => {
+    this.shadowServer = board;
+    this.boardVM.update(this.shadowServer);
+  };
+
   onMessage = (msg: model.Message) => {
     var board = (<model.BoardMessage>msg).board;
     var patch = (<model.PatchMessage>msg).patch;
     if (board) {
-      // TODO: refresh all the board
+      this.initializateShadowServer(board);
     } else if (patch) {
       this.applyServerPatch(patch);
     }
