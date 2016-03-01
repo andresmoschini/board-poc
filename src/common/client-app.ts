@@ -50,7 +50,7 @@ class App {
 
   initializateShadowServer = (board: model.Board) => {
     this.shadowServer = board;
-    this.boardVM.update( this.shadowServer );
+    this.boardVM.update(this.shadowServer);
   };
 
   onMessage = (msg: model.Message) => {
