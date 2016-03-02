@@ -17,8 +17,9 @@
   <div>
     <div class="board" data-bind="drop: true, foreach: notes">
       <ul class="note" data-bind="drag: true, style: style" >
-        <!-- <li><label>Title:<input type="text" data-bind="textInput: title" /></label></li> -->
         <li>
+            <a href="#" style="position: absolute; top: 0px; right: 10px; text-decoration:none;"
+            data-bind="click: $parent.removeNote">x</a>
             <h2  data-bind="jeditable: title, jeditableOptions: {}">Title</h2>
             <div class="text-editable" data-bind="jeditable: content, jeditableOptions: {type: 'textarea', submit: 'Ok', cancel: 'Cancel'}" >Inner text</div>
         </li>
