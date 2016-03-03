@@ -64,3 +64,10 @@ ul.nav-horizontal li a{
 ul.nav-horizontal li a:hover{
     background-color: #111;
 }
+
+li a.close{
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  text-decoration:none;
+}

@@ -72,6 +72,10 @@ export class BoardVM implements IBoardVM {
     return note;
   };
 
+  removeNote = (note: NoteVM) => {
+    this.deleteNote(note.id);
+  };
+
   createNote(id: string = null) : NoteVM {
     id = id || utils.randomString();
     var note = new NoteVM();
@@ -88,6 +92,8 @@ export class BoardVM implements IBoardVM {
     delete this.notesById[id];
     this.notes.remove(note);
   }
+
+
 
   update(plain: Board) {
     this.name(plain.name);
