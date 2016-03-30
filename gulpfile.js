@@ -1,13 +1,15 @@
-var gulp = require('gulp');
-var tslint = require('gulp-tslint');
-var exec = require('child_process').exec;
-var gulp = require('gulp-help')(gulp);
-var tsconfig = require('gulp-tsconfig-files');
-var path = require('path');
-var inject = require('gulp-inject');
-var gulpSequence = require('gulp-sequence');
-var rename = require('gulp-rename');
-var del = require('del');
+var gulp = require('gulp'),
+    tslint = require('gulp-tslint'),
+    exec = require('child_process').exec,
+    gulp = require('gulp-help')(gulp),
+    tsconfig = require('gulp-tsconfig-files'),
+    path = require('path'),
+    inject = require('gulp-inject'),
+    gulpSequence = require('gulp-sequence'),
+    rename = require('gulp-rename'),
+    del = require('del'),
+    jasmine = require('gulp-jasmine'),
+    watch = require('gulp-watch');
 
 gulp.task('clean', 'Cleans the generated js files from lib directory', function () {
   return del([
@@ -37,5 +39,24 @@ gulp.task('_build_server', 'INTERNAL TASK - Compiles Server TypeScript source fi
   });
 });
 
-gulp.task('build', 'Compiles all TypeScript source files and updates module references', 
+gulp.task('build', 'Compiles all TypeScript source files and updates module references',
   gulpSequence('tslint', [ '_build_server', '_build_koclient' ]));
+
+gulp.task('test', ["build-test"], function(){
+  gulp.src("./test/test/**/*.js")
+  .pipe(jasmine({
+    verbose: true
+  }));
+});
+
+gulp.task('build-test', "Compiling test files", function(cb){
+  exec('tsc -p src/test', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});
+
+gulp.task('watch-test', ["test"], function(){
+  gulp.watch("./src/**/*.ts", ["test"]);
+});
