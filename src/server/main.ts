@@ -5,21 +5,19 @@
 
 import * as rfc6902 from "rfc6902";
 import * as express from "express";
-var app = express();
-app.use(express.static(__dirname + "/../../client"));
-
-import * as httpModule from "http";
-var http = (<any>httpModule).Server(app);
-
-import * as socketIO from "socket.io";
-var io = socketIO(http);
-
 import * as utils from "../common/utils";
 import * as model from "../common/model";
+import * as httpModule from "http";
+import * as socketIO from "socket.io";
+import {BoardService} from "./BoardService";
 
+var app = express();
+app.use(express.static(__dirname + "/../../client"));
+var http = (<any>httpModule).Server(app);
+var io = socketIO(http);
 var shadow : model.Board = { };
-
 var current : model.Board = utils.clone(shadow);
+var boardService = new BoardService();
 
 app.get("/", function(req, res){
   // TODO: add a new index page to allow to select client implementation
@@ -30,30 +28,17 @@ app.get("/", function(req, res){
 io.on("connection", function(socket){
   console.log("connection");
 
-  // Send to client the board
-  socket.emit( "board", { board: shadow } );
+  socket.emit( "board", boardService.onClientConnection );
 
-  socket.on("board", function(msg: model.Message) {
-    var board = (<model.BoardMessage>msg).board;
-    var patch = (<model.PatchMessage>msg).patch;
-    if (board) {
-      // TODO: do something
-    } else if (patch) {
-      var output = rfc6902.applyPatch(current, patch);
-    }
-  });
+  socket.on("board", boardService.onClientMessage);
 });
 
 var interval = 1000;
-setInterval(function() {
-  // I am clonnig patch because the created objects has the same reference
-  var changes = utils.clone(rfc6902.createPatch(shadow, current));
-  if (changes.length) {
-    rfc6902.applyPatch(shadow, changes);
-    io.emit("board", { patch: changes });
-  }
-}, interval);
+setInterval(boardService.onTic, interval);
 
+boardService.sendToClient = (changes) => {
+  io.emit("board", {patch: changes});
+};
 
 http.listen(process.env.PORT || 3000, function(){
   console.log("listening on *:3000");
