@@ -28,3 +28,13 @@ With both, _npm_ and _bower_, we need TypeScrip definitions. If _DefinitelyTyped
 it is enough to call `tsd install ... --save` and add the reference to the right files.
 
 If _DefinitelyTyped_ definitions are not available, it is possible to create our own definitions, see the folder `custom-typings`.
+
+## How to test
+
+The tests should be run using `gulp test`.
+
+When a change is made to the files that are defined running, it's possible to run tests each time using `gulp watch-test`.
+
+### Add new tests
+
+New tests should be defined using [Jasmine](http://https://github.com/jasmine/jasmine) and typescript. This files should be saved on *src/test*
